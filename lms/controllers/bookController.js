@@ -2,7 +2,7 @@ var routes = require('express').Router();
 var db = require('../dao/db');
 var bookDao = require('../dao/bookDao');
 
-routes.get('/book',function(req,res){
+routes.get('/books',function(req,res){
     bookDao.getAllBooks(function(error, result){
       if(error) throw error;
       res.setHeader('Content-Type', 'application/json');
@@ -21,6 +21,18 @@ routes.post('/book', function(req, res){
     res.send('Add Book Successful!');
   });
 
+});
+
+routes.put('/book', (req, res) => {
+    var book = req.body;
+    bookDao.updateBook(book, (err, result) =>{
+      if(err){
+        res.status(400);
+        res.send('Update book failed');
+      }
+      res.status(200);
+      res.send('Book updated Successfully');
+    });
 });
 
 routes.delete('/book/:id', function(req, res){
