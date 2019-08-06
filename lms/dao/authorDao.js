@@ -35,27 +35,29 @@ exports.updateAuthor = (author, cb) => {
           });
         }
       
-        db.commit((err, res) =>{	
-          console.log(res);
+        db.commit((err, res) =>{	         
           cb(err,res);
         });
     });
   });
 };
 
-exports.removeBook = (authorId, cb) => {
+exports.removeAuthor = (authorId, cb) => {
   db.beginTransaction((err) => {
     if(err) cb(err, null);
 
-    db.query('DELETE FROM lms.author WHERE author_id = ?', [authorId], (err, res) => {
-      if(err){
-        db.rollback((err, res) => {
+    db.query('DELETE FROM lms.author WHERE author_id = ?', [authorId], (err, res) => {      
+      if(err){       
+        db.rollback((err, res) => {       
+          cb(err, res);          
+        });
+      }       
+      else{       
+        db.commit((err, res) => {        
           cb(err, res);
         });
-      } 
-      db.commit((err, res) => {
-        cb(err, res);
-      });
+      }  
+      
     });
   });
 };

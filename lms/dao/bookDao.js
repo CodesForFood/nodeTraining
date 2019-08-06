@@ -26,21 +26,18 @@ exports.addBook = function(book, cb){
 exports.updateBook = (book, cb) => {
   db.beginTransaction((err) => {
 	if(err) cb(err, null);	
-	console.log(book);
-
-	db.query('UPDATE lms.book SET title = ?, author = ? WHERE book_id = ?', 
-		[book.title, book.author, book.book_id], (err, res) => {
-			if(err){			
-				db.rollback((err,res) =>{				
-					cb(err, res);
-				});
-			}
-		
-			db.commit((err, res) =>{	
-				console.log(res);
-				cb(err,res);
-			});
-	});
+    db.query('UPDATE lms.book SET title = ?, author = ? WHERE book_id = ?', 
+      [book.title, book.author, book.book_id], (err, res) => {
+        if(err){			
+          db.rollback((err,res) =>{				
+            cb(err, res);
+          });
+        }
+      
+        db.commit((err, res) =>{         
+          cb(err,res);
+        });
+    });
   });
 };
 

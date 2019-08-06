@@ -37,11 +37,17 @@ routes.put('/author', (req, res) => {
 
 routes.delete('/author/:id', (req, res) => {
   authorDao.removeAuthor(req.params.id, (err, result) => {
-    if(err){
+    if(err){     
       res.status(400);
       res.send('Failed the remove the Author');
     }
-    res.send('Successfully removed the Author');
+    else if(result.affectedRows == 0){
+      res.status(400);
+      res.send("Cant remove an author that doesnt exist");
+    }
+    else{
+      res.send('Successfully removed the Author'); 
+    }            
   });
 });
 
