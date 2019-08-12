@@ -10,6 +10,16 @@ routes.get('/authors',function(req,res){
     });
 });
 
+routes.get('/author/:id', function(req, res){
+  authorDao.getAuthor(req.params.id, (err, result) =>{
+      if(error) throw error;
+      res.setHeader("Content-Type", "application/json");
+      res.send(result);
+  });
+});
+
+
+
 routes.post('/author', (req, res) => {
   var author = req.body;
   authorDao.addAuthor(author, (err, result, queryRes) => {

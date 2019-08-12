@@ -6,6 +6,12 @@ exports.getAllAuthors = function(cb){
       });
 };
 
+exports.getAuthor = (authId, cd) => {
+  db.query("SELECT * FROM lms.author WHERE author_id = ?", [authId], (err, result) => {
+    cd(err, result);
+  });
+};
+
 exports.addAuthor = (author, cb) => {
   db.beginTransaction((err) => {
       if(err) cb(err, null);
