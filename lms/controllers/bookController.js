@@ -12,36 +12,36 @@ routes.get('/books',function(req,res){
 
 routes.post('/book', function(req, res){
   var book = req.body;
-  bookDao.addBook(book, function(err, result){
+  bookDao.addBook(book, function(err, result, queryRes){
     if(err){
       res.status(400);
       res.send('Add Book Failed!');
     }
     res.status(201);
-    res.send('Add Book Successful!');
+    res.send(queryRes);
   });
   
 });
 
 routes.put('/book', (req, res) => {
     var book = req.body;
-    bookDao.updateBook(book, (err, result) =>{
+    bookDao.updateBook(book, (err, result, queryRes) =>{
       if(err){
         res.status(400);
         res.send('Update book failed');
       }
       res.status(200);
-      res.send('Book updated Successfully');
+      res.send(queryRes);
     });
 });
 
 routes.delete('/book/:id', function(req, res){
-  bookDao.removeBook(req.params.id, function(err, result){
+  bookDao.removeBook(req.params.id, function(err, result, queryRes){
     if(err){
       res.status(400);
       res.send('Delete Book Failed!');
     }
-    res.send('Delete Book Successful!');
+    res.send(queryRes);
   });
 });
 

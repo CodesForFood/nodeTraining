@@ -12,41 +12,41 @@ routes.get('/authors',function(req,res){
 
 routes.post('/author', (req, res) => {
   var author = req.body;
-  authorDao.addAuthor(author, (err, result) => {
+  authorDao.addAuthor(author, (err, result, queryRes) => {
     if(err){
       res.status(400);
       res.send("Failed to add author");
     }
 
     res.status(201);
-    res.send('Successfully added the author');        
+    res.send(queryRes);        
   });
 });
 
 routes.put('/author', (req, res) => {
   var author = req.body;
-  authorDao.updateAuthor(author, (err, result) =>{
+  authorDao.updateAuthor(author, (err, result, queryRes) =>{
     if(err){
       res.status(400);
       res.send('Failed to update the author');
     }
     res.status(200);
-    res.send('Successfully updated the author');
+    res.send(queryRes);
   });
 });
 
 routes.delete('/author/:id', (req, res) => {
-  authorDao.removeAuthor(req.params.id, (err, result) => {
+  authorDao.removeAuthor(req.params.id, (err, result, queryRes) => { 
     if(err){     
       res.status(400);
-      res.send('Failed the remove the Author');
+      res.send(queryRes);
     }
-    else if(result.affectedRows == 0){
+    else if(queryRes.affectedRows == 0){
       res.status(400);
-      res.send("Cant remove an author that doesnt exist");
+      res.send(queryRes);
     }
     else{
-      res.send('Successfully removed the Author'); 
+      res.send(queryRes); 
     }            
   });
 });
