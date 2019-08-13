@@ -12,7 +12,7 @@ routes.get('/authors',function(req,res){
 
 routes.get('/author/:id', function(req, res){
   authorDao.getAuthor(req.params.id, (err, result) =>{
-      if(error) throw error;
+      if(err) throw err;
       res.setHeader("Content-Type", "application/json");
       res.send(result);
   });
